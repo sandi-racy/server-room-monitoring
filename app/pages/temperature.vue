@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-2xl font-extrabold mb-5">Suhu dan Kelembapan</h1>
+        <h1 class="text-2xl font-extrabold mb-5 mt-3">Suhu dan Kelembapan</h1>
         <div class="flex w-full flex-col gap-4" v-show="temperature == 0">
             <div class="skeleton h-32 w-full"></div>
             <div class="skeleton h-4 w-28"></div>
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-base-100 shadow-xl border border-base-200 max-w-2xl mx-auto mt-3 mb-[100px]">
+            <div class="card bg-base-100 shadow-xl border border-base-200 max-w-2xl mx-auto mt-3 sm:mb-[100px]">
                 <div class="card-body">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="card-title text-xl font-bold">Logs</h2>

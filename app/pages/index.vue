@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex justify-between items-center mb-5">
+        <div class="flex justify-between items-center mb-5 mt-3">
             <h1 class="text-2xl font-extrabold">Dashboard</h1>
             <span class="text-xs text-gray-500" v-show="timestamp != 0">{{ formattedDate(timestamp) }}</span>
         </div>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </NuxtLink>
-            <div class="card card-side bg-base-100 shadow-xl border border-base-200 max-w-md mt-3 mb-[100px]">
+            <div class="card card-side bg-base-100 shadow-xl border border-base-200 max-w-md mt-3 sm:mb-[100px]">
                 <div class="card-body">
                     <Line ref="chartRef" :data="chartData" :options="chartOptions" />
                 </div>

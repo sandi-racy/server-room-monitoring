@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-2xl font-extrabold mb-5">Konsumsi Daya</h1>
+        <h1 class="text-2xl font-extrabold mb-5 mt-3">Konsumsi Daya</h1>
         <div class="card card-side bg-base-100 shadow-xl border border-base-200 max-w-md">
             <div class="card-body">
                 <h3 class="text-sm font-semibold text-base-content/50 uppercase tracking-wider">Saat Ini</h3>
@@ -33,7 +33,7 @@
                 <Line :data="chartData" :options="chartOptions" />
             </div>
         </div>
-        <div class="card bg-base-100 shadow-xl border border-base-200 max-w-md mt-3 mb-[100px]">
+        <div class="card bg-base-100 shadow-xl border border-base-200 max-w-md mt-3 sm:mb-[100px]">
             <div class="card-body">
                 <h2 class="card-title text-xl font-bold mb-2">Perkiraan Kebutuhan Daya</h2>
                 <div class="space-y-3">

@@ -163,8 +163,8 @@
             timestamp.value = data.timestamp
             temperature.value = data.temperature || 0
             humidity.value = data.humidity || 0
-            power.value = data.power || 0
-            voltage.value = data.voltage || 0
+            power.value = data.power.toFixed(2) || 0
+            voltage.value = data.voltage.toFixed(2) || 0
             leak.value = data.leak || false
 
             const chart = chartRef.value.chart

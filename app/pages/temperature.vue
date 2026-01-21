@@ -18,6 +18,9 @@
                         <p class="text-lg font-medium text-base-content/70">
                             Kelembapan: <span class="text-base-content font-bold">{{ humidity }}%</span>
                         </p>
+                        <p class="text-lg font-medium text-base-content/70">
+                            Suhu AC: <span class="text-base-content font-bold">{{ temperatureAc }}°C</span>
+                        </p>
                     </div>
                 </div>
                 <div class="flex items-center pr-8">
@@ -120,6 +123,7 @@
 
     const temperature = ref(0)
     const humidity = ref(0)
+    const temperatureAc = ref(24)
     const db = useDatabase()
     const realtimeRef = dbRef(db, 'server_room/realtime')
     const realtimeData = useDatabaseObject(realtimeRef)
@@ -139,6 +143,21 @@
         if (data) {
             temperature.value = data.temperature || 0
             humidity.value = data.humidity || 0
+
+            fetch('https://nlimabugvzcqlmhdmcrr.supabase.co/functions/v1/temperature', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': 'sb_publishable_UdHV07mhbEX40X4myCAwKQ_sXUGc-Tn',
+                    'Authorization': 'Bearer sb_publishable_UdHV07mhbEX40X4myCAwKQ_sXUGc-Tn'
+                },
+                body: JSON.stringify({
+                    temperature: temperature.value,
+                    humidity: humidity.value
+                })
+            }).then(res => {
+                return res.json();
+            }).then(data => console.log(data));
 
             const chart = chartRef.value.chart
             const labels = chart.data.labels

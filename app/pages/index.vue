@@ -120,7 +120,7 @@
     const leak = ref(false)
     const chartRef = ref(null)
 
-    const logsRef = dbRef(db, 'server_room/history/2026-01-09')
+    const logsRef = dbRef(db, 'server_room/history/2026-01-22')
     const snapshot = await get(logsRef)
     let logs = Object.entries(snapshot.val()).map(([key, value]) => ({ ...value, time: key })).sort((a, b) => b.time.localeCompare(a.time))
     logs = logs.slice(0, 10);

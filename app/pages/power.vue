@@ -6,10 +6,10 @@
                 <h3 class="text-sm font-semibold text-base-content/50 uppercase tracking-wider">Saat Ini</h3>
                 <div class="space-y-1">
                     <p class="text-lg font-medium text-base-content/70">
-                        Power: <span class="text-base-content font-bold">24 Watt</span>
+                        Power: <span class="text-base-content font-bold">{{ power }} Watt</span>
                     </p>
                     <p class="text-lg font-medium text-base-content/70">
-                        Beban: <span class="text-base-content font-bold">80 Volt</span>
+                        Beban: <span class="text-base-content font-bold">{{ voltage }} Volt</span>
                     </p>
                 </div>
             </div>
@@ -62,9 +62,22 @@
 </template>
 
 <script setup>
+    import { ref as dbRef, get } from 'firebase/database'
     import { Line } from 'vue-chartjs'
     import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale } from 'chart.js'
     ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale)
+
+    const power = ref(0)
+    const voltage = ref(0)
+    const db = useDatabase()
+    const realtimeRef = dbRef(db, 'server_room/realtime')
+    const realtimeData = useDatabaseObject(realtimeRef)
+
+    watch(realtimeData, (data) => {
+        power.value = data.power.toFixed(2) || 0
+        voltage.value = data.voltage.toFixed(2) || 0
+    })
+
     const chartData = {
         labels: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00'],
         datasets: [{

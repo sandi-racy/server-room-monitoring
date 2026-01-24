@@ -19,7 +19,7 @@
                             Kelembapan: <span class="text-base-content font-bold">{{ humidity }}%</span>
                         </p>
                         <p class="text-lg font-medium text-base-content/70">
-                            Suhu AC: <span class="text-base-content font-bold">{{ temperatureAc }}°C</span>
+                            Suhu AC: <span class="text-base-content font-bold">{{ Math.round(temperatureAc) }}°C</span>
                         </p>
                     </div>
                 </div>
@@ -90,20 +90,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-sm">10:45</td>
+                                <tr v-for="log in temperatureData">
+                                    <td class="text-sm">{{ log.time.split(':').slice(0, 2).join(':') }}</td>
                                     <td><div class="badge badge-ghost badge-sm">Cool</div></td>
-                                    <td class="font-mono">22°C</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">09:30</td>
-                                    <td><div class="badge badge-ghost badge-sm">Dry</div></td>
-                                    <td class="font-mono">24°C</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-sm">08:15</td>
-                                    <td><div class="badge badge-ghost badge-sm">Fan</div></td>
-                                    <td class="font-mono">25°C</td>
+                                    <td class="font-mono">{{ log.temperature }}°C</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -123,21 +113,22 @@
 
     const temperature = ref(0)
     const humidity = ref(0)
-    const temperatureAc = ref(24)
+    const temperatureAc = ref(0)
+    const temperatureData = ref([])
     const db = useDatabase()
     const realtimeRef = dbRef(db, 'server_room/realtime')
     const realtimeData = useDatabaseObject(realtimeRef)
     const chartRef = ref(null)
 
-    const logsRef = dbRef(db, 'server_room/history/2026-01-09')
+    const logsRef = dbRef(db, 'server_room/history/2026-01-22')
     const snapshot = await get(logsRef)
     let logs = Object.entries(snapshot.val()).map(([key, value]) => ({ ...value, time: key })).sort((a, b) => b.time.localeCompare(a.time))
     logs = logs.slice(0, 10);
+    temperatureData.value = logs
     logs = [...logs].reverse();
     const labels = logs.map(item => {
         return item.time.split(':').slice(0, 2).join(':')
     })
-    const temperatureData = logs.map(item => item.temperature);
 
     watch(realtimeData, (data) => {
         if (data) {
@@ -156,9 +147,15 @@
                     humidity: humidity.value
                 })
             }).then(res => {
-                return res.json();
-            }).then(data => console.log(data));
+                return res.json()
+            }).then(data => {
+                temperatureAc.value = data.temperatureAc
+            });
 
+            temperatureData.value.unshift({
+                time: format(new Date(data.timestamp * 1000 - (7 * 60 * 60 * 1000)), 'HH:mm'),
+                temperature: temperature.value
+            })
             const chart = chartRef.value.chart
             const labels = chart.data.labels
             const label = format(new Date((data.timestamp * 1000) - (7 * 60 * 60 * 1000)), 'HH:mm')

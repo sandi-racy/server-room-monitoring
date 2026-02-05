@@ -55,9 +55,9 @@
                     </div>
                 </div>
                 <div class="flex items-center pr-8">
-                    <div class="w-16 h-16 rounded-full border-4 border-blue-100 flex items-center justify-center bg-blue-50/50">
+                    <div class="w-16 h-16 rounded-full border-4 border-yellow-100 flex items-center justify-center bg-yellow-50/50">
                         <svg xmlns="http://www.w3.org/2000/svg" 
-                            class="w-8 h-8 text-blue-500" 
+                            class="w-8 h-8 text-yellow-500" 
                             viewBox="0 0 24 24" 
                             fill="none" 
                             stroke="currentColor" 
@@ -79,9 +79,9 @@
                     </div>
                 </div>
                 <div class="flex items-center pr-8">
-                    <div class="w-16 h-16 rounded-full border-4 border-blue-100 flex items-center justify-center bg-blue-50/50">
+                    <div class="w-16 h-16 rounded-full border-4 border-green-100 flex items-center justify-center bg-green-50/50">
                         <svg xmlns="http://www.w3.org/2000/svg" 
-                            class="w-8 h-8 text-blue-500" 
+                            class="w-8 h-8 text-green-500" 
                             viewBox="0 0 24 24" 
                             fill="none" 
                             stroke="currentColor" 
@@ -120,7 +120,7 @@
     const leak = ref(false)
     const chartRef = ref(null)
 
-    const logsRef = dbRef(db, 'server_room/history/2026-01-22')
+    const logsRef = dbRef(db, 'server_room/history/' + (new Date()).toISOString().slice(0, 10))
     const snapshot = await get(logsRef)
     let logs = Object.entries(snapshot.val()).map(([key, value]) => ({ ...value, time: key })).sort((a, b) => b.time.localeCompare(a.time))
     logs = logs.slice(0, 10);
@@ -151,8 +151,8 @@
         }, {
             label: 'Status Kebocoran',
             data: [0, 0, 0, 1, 0, 0, 0, 0, 0, 0], 
-            borderColor: '#ef4444',
-            backgroundColor: '#ef4444',
+            borderColor: '#00C851',
+            backgroundColor: '#00C851',
             yAxisID: 'y',
             stepped: true,
         }]

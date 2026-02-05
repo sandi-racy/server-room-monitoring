@@ -5,18 +5,14 @@
             <div class="card-body">
                 <h3 class="text-sm font-semibold text-base-content/50 uppercase tracking-wider">Saat Ini</h3>
                 <div class="space-y-1">
-                    <p class="text-lg font-medium text-base-content/70">
-                        Suhu: <span class="text-base-content font-bold">24°C</span>
-                    </p>
-                    <p class="text-lg font-medium text-base-content/70">
-                        Kelembapan: <span class="text-base-content font-bold">80%</span>
-                    </p>
+                    <div class="badge badge-soft badge-accent text-lg" v-if="!leak">Aman</div>
+                    <div class="badge badge-soft badge-error text-lg" v-if="leak">Bocor</div>
                 </div>
             </div>
             <div class="flex items-center pr-8">
-                <div class="w-16 h-16 rounded-full border-4 border-blue-100 flex items-center justify-center bg-blue-50/50">
+                <div class="w-16 h-16 rounded-full border-4 border-green-100 flex items-center justify-center bg-green-50/50">
                     <svg xmlns="http://www.w3.org/2000/svg" 
-                        class="w-8 h-8 text-blue-500" 
+                        class="w-8 h-8 text-green-500" 
                         viewBox="0 0 24 24" 
                         fill="none" 
                         stroke="currentColor" 
@@ -40,25 +36,27 @@
                         <thead class="bg-base-200">
                             <tr>
                                 <th>Waktu</th>
-                                <th>Mode</th>
-                                <th>Suhu</th>
+                                <th>Kebocoran</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td class="text-sm">10:45</td>
-                                <td><div class="badge badge-ghost badge-sm">Cool</div></td>
-                                <td class="font-mono">22°C</td>
+                                <td class="font-mono">
+                                    <div class="badge badge-soft badge-accent">Aman</div>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-sm">09:30</td>
-                                <td><div class="badge badge-ghost badge-sm">Dry</div></td>
-                                <td class="font-mono">24°C</td>
+                                <td class="font-mono">
+                                    <div class="badge badge-soft badge-error">Tidak Aman</div>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-sm">08:15</td>
-                                <td><div class="badge badge-ghost badge-sm">Fan</div></td>
-                                <td class="font-mono">25°C</td>
+                                <td class="font-mono">
+                                    <div class="badge badge-soft badge-accent">Aman</div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

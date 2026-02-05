@@ -120,7 +120,7 @@
     const realtimeData = useDatabaseObject(realtimeRef)
     const chartRef = ref(null)
 
-    const logsRef = dbRef(db, 'server_room/history/2026-01-22')
+    const logsRef = dbRef(db, 'server_room/history/' + (new Date()).toISOString().slice(0, 10))
     const snapshot = await get(logsRef)
     let logs = Object.entries(snapshot.val()).map(([key, value]) => ({ ...value, time: key })).sort((a, b) => b.time.localeCompare(a.time))
     logs = logs.slice(0, 10);
@@ -150,7 +150,7 @@
                 return res.json()
             }).then(data => {
                 temperatureAc.value = data.temperatureAc
-            });
+            })
 
             temperatureData.value.unshift({
                 time: format(new Date(data.timestamp * 1000 - (7 * 60 * 60 * 1000)), 'HH:mm'),
